@@ -1,4 +1,4 @@
-package system_main;
+package model;
 
 public class Driver extends User {
 

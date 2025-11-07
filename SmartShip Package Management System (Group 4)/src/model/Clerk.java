@@ -1,4 +1,4 @@
-package system_main;
+package model;
 
 public class Clerk extends User {
 

@@ -1,5 +1,7 @@
-//Group members: Justin Mais () & Elisha Beverly (2100145)
-package system_main;
+//Group members: Justin Mais (2103928) & Elisha Beverly (2100145)
+package model;
+
+import java.time.LocalDateTime;
 
 public abstract class User {
 	
@@ -11,6 +13,8 @@ public abstract class User {
 	protected String email;
 	protected String password;
 	protected String role;
+	protected LocalDateTime lastLogin;
+	
 	
 	//---------------------Default Constructor---------------------
 	public User() {
@@ -21,21 +25,22 @@ public abstract class User {
 		email = "";
 		password = "";
 		role = "";
+		lastLogin = null;
 	}
 	
+
 	//-------------------------Constructor-------------------------
-	public User(int userID, String name, String email, String password, String role) {
-		super();
-		this.userId = userID;
-		this.fName = name;
-		this.lName = name;
+	public User(int userId, String userName, String fName, String lName, String email, String password, String role) {
+		this.userId = userId;
+		this.userName = fName + " " + lName; //Username made from combining first and last
+		this.fName = fName;
+		this.lName = lName;
 		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
 
-	
-	
+		
 	//---------------------Getters and Setters---------------------
 	public int getUserId() {
 		return userId;
@@ -91,14 +96,29 @@ public abstract class User {
 
 	public void setRole(String role) {
 		this.role = role;
-	}	;
+	}	
+	
+	public LocalDateTime getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(LocalDateTime lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	
+	
 	
 	
 	//---------------------Login Function---------------------
 	public static User Login(String email, String password) {
+		//for authentication for later
 		return null;
 		
 	};
+	
+	
+	
 	
 	
 	//---------------------Logout Function---------------------
@@ -107,6 +127,9 @@ public abstract class User {
 		
 	};
 	
-	//---------------------Portals Section---------------------
 	
+	
+	
+	//---------------------Portals Section---------------------
+	abstract void openMainPortal();
 }
