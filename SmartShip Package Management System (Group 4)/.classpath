@@ -7,5 +7,8 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Kukkinoba/Downloads/mysql-connector-j-9.5.0/mysql-connector-j-9.5.0/mysql-connector-j-9.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kukkinoba/Downloads/apache-log4j-2.25.2-bin/log4j-api-2.25.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kukkinoba/Downloads/apache-log4j-2.25.2-bin/log4j-core-2.25.2.jar"/>
+	<classpathentry kind="lib" path="properties"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
