@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.Logger;
 import utils.LoggerManager;
 import model.*;
+import model.User;
 import model.Driver;
 
 public class databaseConnection {
@@ -50,21 +51,24 @@ public class databaseConnection {
                 String lName = rs.getString("last_name");
                 String role = rs.getString("role");
 
+                // Create username again by combining first and last name
+                String userName = fName + " " + lName;
+
                 logger.info("Found user in database: " + email + " | Role: " + role);
 
                 // Return object based on role
                 switch (role.toLowerCase()) {
                     case "manager":
-                        user = new Manager(id, fName + " " + lName, fName, lName, email, password, role);
+                        user = new Manager(id, userName, fName, lName, email, password, role);
                         break;
                     case "driver":
-                        user = new Driver(id, fName + " " + lName, fName, lName, email, password, role);
+                        user = new Driver(id, userName, fName, lName, email, password, role);
                         break;
                     case "customer":
-                        user = new Customer(id, fName + " " + lName, fName, lName, email, password, role);
+                        user = new Customer(id, userName, fName, lName, email, password, role);
                         break;
                     case "clerk":
-                        user = new Clerk(id, fName + " " + lName, fName, lName, email, password, role);
+                        user = new Clerk(id, userName, fName, lName, email, password, role);
                         break;
                     default:
                         logger.warn("Unknown role '{}' for user: {}", role, email);
