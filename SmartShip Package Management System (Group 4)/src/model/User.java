@@ -2,9 +2,11 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+
 import org.apache.logging.log4j.Logger;
 import utils.LoggerManager;
-
+import server.databaseConnection;
 import utils.Validator;
 
 public abstract class User {
@@ -127,23 +129,66 @@ public abstract class User {
 	}
 
 	
-	
-	
-	
+
 	//---------------------Login Function---------------------
+	//--------------------- Login Function ---------------------
 	public static User Login(String email, String password) {
-		
-		//check email and password
-		//validate with database
-		//return whether or not it matches an entry
-		//maybe an exception incase smthn wrong
-		//return a statement if it matches, if not retry login
-		//switch case to choose what portal to open if the role that matches the credentials
-		
-		
-		return null;
-		
-	};
+	    try {
+	        logger.info("Attempting login for " + email);
+
+	        // Step 1: Validate credentials through database
+	        User user = databaseConnection.authenticateUser(email, password);
+
+	        // Step 2: Check if the database returned a matching user
+	        if (user != null) {
+	            user.setLastLogin(LocalDateTime.now());
+	            logger.info("Login successful for user: " + email + " | Role: " + user.getRole());
+
+	            // Step 3: Open the correct portal based on user role
+	            switch (user.getRole().toLowerCase()) {
+	                case "manager":
+	                    logger.info("Redirecting " + user.getUserName() + " to Manager Portal...");
+	                    user.openMainPortal();
+	                    break;
+
+	                case "driver":
+	                    logger.info("Redirecting " + user.getUserName() + " to Driver Portal...");
+	                    user.openMainPortal();
+	                    break;
+
+	                case "customer":
+	                    logger.info("Redirecting " + user.getUserName() + " to Customer Portal...");
+	                    user.openMainPortal();
+	                    break;
+
+	                case "clerk":
+	                    logger.info("Redirecting " + user.getUserName() + " to Clerk Portal...");
+	                    user.openMainPortal();
+	                    break;
+
+	                default:
+	                    logger.warn("Unrecognized role for user: " + email + " | Role: " + user.getRole());
+	                    System.out.println("Unknown role detected. Please contact an administrator.");
+	                    break;
+	            }
+
+	            // Step 4: Return the logged-in user object
+	            return user;
+
+	        } else {
+	            // No match found in database
+	            logger.warn("Login failed for " + email + " - credentials not found in database.");
+	            System.out.println("Login failed! Please check your email or password and try again.");
+	            return null;
+	        }
+
+	    } catch (Exception e) {
+	        // Step 5: Handle any errors gracefully
+	        LoggerManager.logException(logger, "Error during login process for " + email, e);
+	        System.out.println("An unexpected error occurred while logging in. Please try again later.");
+	        return null;
+	    }
+	}
 	
 	
 	
@@ -151,11 +196,14 @@ public abstract class User {
 	
 	//---------------------Logout Function---------------------
 	public void Logout() {
-		System.out.println(userName + " has logged out.");
+		logger.info("User" + userName + "has logged out");
+		System.out.println("Bye Bye"+ userName + "Come back soon <3");
 		
 	};
 	
 	
+	// change password function
+	public void changePassword() {}
 	
 	
 	//---------------------Portals Section---------------------
