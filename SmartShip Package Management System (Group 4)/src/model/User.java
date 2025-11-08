@@ -113,7 +113,7 @@ public abstract class User {
 	//---------------------Login Function---------------------
 	public static User Login(String email, String password) {
 		
-		//check email amd password
+		//check email and password
 		//validate with database
 		//return whether or not it matches an entry
 		//maybe an exception incase smthn wrong

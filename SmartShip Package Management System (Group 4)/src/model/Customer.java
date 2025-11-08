@@ -32,7 +32,7 @@ public class Customer extends User {
 	}
 	
 	public void emailReceipt() {
-		//send email to receipt (find a way to implement it and send it to actual email account
+		//send email to receipt (find a way to implement it and send it to actual email account)
 	}
 
 
