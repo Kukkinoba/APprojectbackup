@@ -2,15 +2,13 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.logging.Level;
-
 import org.apache.logging.log4j.Logger;
 import utils.LoggerManager;
 import server.databaseConnection;
 import utils.Validator;
 
 public abstract class User {
-	// the logger
+	//-----------------------logger-----------------------
 	protected static final Logger logger = LoggerManager.getLogger(User.class);
 	
 	
@@ -128,23 +126,17 @@ public abstract class User {
 		this.lastLogin = lastLogin;
 	}
 
-	
-
-	//---------------------Login Function---------------------
 	//--------------------- Login Function ---------------------
 	public static User Login(String email, String password) {
 	    try {
 	        logger.info("Attempting login for " + email);
 
-	        // Step 1: Validate credentials through database
 	        User user = databaseConnection.authenticateUser(email, password);
 
-	        // Step 2: Check if the database returned a matching user
 	        if (user != null) {
 	            user.setLastLogin(LocalDateTime.now());
 	            logger.info("Login successful for user: " + email + " | Role: " + user.getRole());
 
-	            // Step 3: Open the correct portal based on user role
 	            switch (user.getRole().toLowerCase()) {
 	                case "manager":
 	                    logger.info("Redirecting " + user.getUserName() + " to Manager Portal...");
@@ -171,19 +163,17 @@ public abstract class User {
 	                    System.out.println("Unknown role detected. Please contact an administrator.");
 	                    break;
 	            }
-
-	            // Step 4: Return the logged-in user object
 	            return user;
 
 	        } else {
-	            // No match found in database
+
 	            logger.warn("Login failed for " + email + " - credentials not found in database.");
 	            System.out.println("Login failed! Please check your email or password and try again.");
 	            return null;
 	        }
 
 	    } catch (Exception e) {
-	        // Step 5: Handle any errors gracefully
+
 	        LoggerManager.logException(logger, "Error during login process for " + email, e);
 	        System.out.println("An unexpected error occurred while logging in. Please try again later.");
 	        return null;
