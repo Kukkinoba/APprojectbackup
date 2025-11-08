@@ -7,7 +7,7 @@ public class Customer extends User {
 	
 	}
 
-	//open the portal
+	//open the  for customer role
 	public void openMainPortal(){
 		System.out.println("Opening Customer Portal For" + userName);
 	}
@@ -15,11 +15,25 @@ public class Customer extends User {
 	
 	//--------------------Actions-------------------
 	
-	public void createAccount() {}
-	public void createShippigRequest() {}
-	public void trackPackage() {}
-	public void receiveInvoice() {}
-	public void emailReceipt() {}
+	public void createAccount() {
+		//create new account interface
+	}
+	
+	public void createShippigRequest() {
+		//create shipping request interface
+	}
+	
+	public void trackPackage() {
+		//create package tracking interface
+	}
+	
+	public void receiveInvoice() {
+		//print invoice on button press
+	}
+	
+	public void emailReceipt() {
+		//send email to receipt (find a way to implement it and send it to actual email account
+	}
 
 
 

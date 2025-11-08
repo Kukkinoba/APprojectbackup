@@ -112,7 +112,15 @@ public abstract class User {
 	
 	//---------------------Login Function---------------------
 	public static User Login(String email, String password) {
-		//for authentication for later
+		
+		//check email amd password
+		//validate with database
+		//return whether or not it matches an entry
+		//maybe an exception incase smthn wrong
+		//return a statement if it matches, if not retry login
+		//switch case to choose what portal to open if the role that matches the credentials
+		
+		
 		return null;
 		
 	};
