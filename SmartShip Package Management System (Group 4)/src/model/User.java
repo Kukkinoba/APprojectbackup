@@ -2,8 +2,15 @@
 package model;
 
 import java.time.LocalDateTime;
+import org.apache.logging.log4j.Logger;
+import utils.LoggerManager;
+
+import utils.Validator;
 
 public abstract class User {
+	// the logger
+	protected static final Logger logger = LoggerManager.getLogger(User.class);
+	
 	
 	//-----------------------Main Attributes-----------------------
 	protected int userId;
@@ -78,16 +85,29 @@ public abstract class User {
 		return email;
 	}
 
+	
 	public void setEmail(String email) {
-		this.email = email;
+		if (Validator.validateEmail(email)) {
+			this.email = email;
+			logger.info("Email received for user: "+ userName +"\nEmail: "+ email);
+		} else {
+			logger.warn("This emails format is invalid for user: "+ userName +"\nEmail: "+ email);
+			throw new IllegalArgumentException("Invalid email format");
+		}
 	}
 
 	public String getPassword() {
 		return password;
 	}
-
+	
 	public void setPassword(String password) {
-		this.password = password;
+		if (Validator.validatePassword(password)) {
+			this.password = password;
+			logger.info("Everything checks out "+ userName + ". Proceed!~");
+		} else {
+			logger.warn("Password validation failed. Are you a scammer "+ fName + "?" );
+			throw new IllegalArgumentException("Invalid email format");
+		}
 	}
 
 	public String getRole() {
