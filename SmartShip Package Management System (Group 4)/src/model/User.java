@@ -20,6 +20,7 @@ public abstract class User {
 	protected String email;
 	protected String password;
 	protected String role;
+	protected String phone;
 	protected LocalDateTime lastLogin;
 	
 	
@@ -32,18 +33,20 @@ public abstract class User {
 		email = "";
 		password = "";
 		role = "";
+		phone = "";
 		lastLogin = null;
 	}
 	
 
 	//-------------------------Constructor-------------------------
-	public User(int userId, String userName, String fName, String lName, String email, String password, String role) {
+	public User(int userId, String userName, String fName, String lName, String email, String password, String role, String phone) {
 		this.userId = userId;
 		this.userName = fName + " " + lName; //Username made from combining first and last
 		this.fName = fName;
 		this.lName = lName;
 		this.email = email;
 		this.password = password;
+		this.phone = phone;
 		this.role = role;
 	}
 
@@ -117,6 +120,15 @@ public abstract class User {
 	public void setRole(String role) {
 		this.role = role;
 	}	
+	
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	
 	public LocalDateTime getLastLogin() {
 		return lastLogin;
