@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import utils.LoggerManager;
 import model.*;
 import model.User;
+import model.Customer;
 import model.Driver;
 
 public class databaseConnection {
@@ -52,6 +53,7 @@ public class databaseConnection {
                 String lName = rs.getString("lName");
                 String role = rs.getString("role");
                 String phone = rs.getString("phone");
+                String address = rs.getString("address");
 
                 logger.info("Found user in database: " + email + " | Role: " + role);
 
@@ -63,7 +65,7 @@ public class databaseConnection {
                         user = new Driver(id, userName, fName, lName, email, password, role, phone);
                         break;
                     case "customer":
-                        user = new Customer(id, userName, fName, lName, email, password, role, phone);
+                        user = new Customer(id, userName, fName, lName, email, password, role, phone, address);
                         break;
                     case "clerk":
                         user = new Clerk(id, userName, fName, lName, email, password, role, phone);

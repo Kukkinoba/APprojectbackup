@@ -167,9 +167,10 @@ public class Customer extends User {
     }
 
 
-	@Override
-	public void openMainPortal() {
-		
-	}
+    @Override
+    public void openMainPortal() {
+        new view.CustomerGUI(this).setVisible(true);
+    }
+
 
 }

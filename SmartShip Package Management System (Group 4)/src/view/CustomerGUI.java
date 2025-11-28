@@ -133,7 +133,7 @@ public class CustomerGUI extends JFrame {
             }
         });
 
-      //--------------------- ftrrac packages ---------------------
+      //--------------------- track pckages ---------------------
         btnTrackPackage.addActionListener(e -> {
             String trackingNo = JOptionPane.showInputDialog(this,
                     "Enter Tracking Number:");

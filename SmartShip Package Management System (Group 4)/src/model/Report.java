@@ -180,15 +180,37 @@ public class Report {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Report [type=" + type + ", period=" + period + ", totalShipments=" + totalShipments + ", delivered="
-				+ delivered + ", delayed=" + delayed + ", pending=" + pending + ", inTransit=" + inTransit
-				+ ", totalRevenue=" + totalRevenue + ", vehicleUtilizationPercent=" + vehicleUtilizationPercent
-				+ ", totalInvoices=" + totalInvoices + ", paidInvoices=" + paidInvoices + ", unpaidInvoices="
-				+ unpaidInvoices + "]";
-	}
-    
-    
-    
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(type).append("\n");
+        sb.append("Period: ").append(period).append("\n\n");
+
+        if (totalShipments > 0) {
+            sb.append("Total Shipments: ").append(totalShipments).append("\n");
+            sb.append("Delivered: ").append(delivered).append("\n");
+            sb.append("Delayed: ").append(delayed).append("\n");
+            sb.append("Pending: ").append(pending).append("\n");
+            sb.append("In Transit: ").append(inTransit).append("\n\n");
+        }
+
+        if (totalRevenue > 0) {
+            sb.append("Total Revenue: $").append(totalRevenue).append("\n\n");
+        }
+
+        if (vehicleUtilizationPercent > 0) {
+            sb.append("Vehicle Utilization: ")
+              .append(vehicleUtilizationPercent).append("%\n\n");
+        }
+
+        if (totalInvoices > 0) {
+            sb.append("Invoices: ").append(totalInvoices).append("\n");
+            sb.append("Paid: ").append(paidInvoices).append("\n");
+            sb.append("Unpaid: ").append(unpaidInvoices).append("\n");
+        }
+
+        return sb.toString();
+    }
 }
