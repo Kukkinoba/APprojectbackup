@@ -39,15 +39,15 @@ public abstract class User {
 	
 
 	//-------------------------Constructor-------------------------
-	public User(int userId, String userName, String fName, String lName, String email, String password, String role, String phone) {
+	public User(int userId, String userName2, String fName2, String lName2, String email2, String password2, String role2, String phone2) {
 		this.userId = userId;
-		this.userName = fName + " " + lName; //Username made from combining first and last
-		this.fName = fName;
-		this.lName = lName;
-		this.email = email;
-		this.password = password;
-		this.phone = phone;
-		this.role = role;
+		this.userName = fName2 + " " + lName2; //Username made from combining first and last
+		this.fName = fName2;
+		this.lName = lName2;
+		this.email = email2;
+		this.password = password2;
+		this.phone = phone2;
+		this.role = role2;
 	}
 
 		
