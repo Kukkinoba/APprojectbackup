@@ -12,8 +12,18 @@ public class Driver extends User {
 		System.out.println("Opening Driver Portal For" + userName);
 	}
 	
-	//update shimpent status
+	
+	//--------------------Actions for the driver-------------------
+	public void viewAssingedDeli() {
+		//send email to receipt (find a way to implement it and send it to actual email account)
+	}
+	
+	
 	public void updateShipStat(int shipmentId, String status) {
 		System.out.println("Shipment " + shipmentId + " updated to " + status);
 }
+	
+	public void viewPayslip() {
+		//send email to receipt (find a way to implement it and send it to actual email account)
+	}
 }

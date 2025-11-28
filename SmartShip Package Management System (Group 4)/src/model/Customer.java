@@ -1,56 +1,175 @@
 package model;
 
+import java.sql.*;
+import java.util.ArrayList;
+import server.databaseConnection;
+
 public class Customer extends User {
 
-	public Customer(int userId, String userName, String fName, String lName, String email, String password, String role, String phone) {
-	super(userId, userName, fName, lName, email, password, role, phone);
-	
-	}
+    private String address;
 
-	//open the  for customer role
-	public void openMainPortal(){
-		System.out.println("Opening Customer Portal For" + userName);
-	}
-
-	
-	//--------------------Actions-------------------
-	
-	public void createAccount() {
-		//create new account interface
-	}
-	
-	public void createShippingRequest() {
-		//create shipping request interface
-	}
-	
-	public void trackPackage() {
-		//create package tracking interface
-	}
-	
-	public void receiveInvoice() {
-		//print invoice on button press
-	}
-	
-	public void emailReceipt() {
-		//send email to receipt (find a way to implement it and send it to actual email account)
-	}
+    // Storage
+    private ArrayList<Shipment> shipmentHistory = new ArrayList<>();
+    private ArrayList<String> invoices = new ArrayList<>();
 
 
-	package model;
-	public class Customer extends User {
-	    private String address;
-	    private String phone;
+    // ---------------- Constructor ----------------
+    public Customer(int userId, String userName, String fName, String lName,
+                    String email, String password, String role,
+                    String phone, String address) {
 
-	    public Customer(int id, String name, String username, String password, String address, String phone) {
-	        super(id, name, username, password, "Customer");
-	        this.address = address;
-	        this.phone = phone;
-	    }
+        super(userId, userName, fName, lName, email, password, role, phone);
+        this.address = address;
+    }
 
-	    public String getAddress() { return address; }
-	    public void setAddress(String address) { this.address = address; }
-	    public String getPhone() { return phone; }
-	    public void setPhone(String phone) { this.phone = phone; }
+
+    // ---------------- Getters & Setters ----------------
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+
+
+    // ---------------- create account for customer ----------------
+    public static Customer createAccountDB(String userName, String fName, String lName,
+                                           String email, String phone, String address,
+                                           String password) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = databaseConnection.getConnection();
+
+            String sql = "INSERT INTO users (userName, fName, lName, email, password, role, phone, address) "
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, userName);
+            ps.setString(2, fName);
+            ps.setString(3, lName);
+            ps.setString(4, email);
+            ps.setString(5, password);
+            ps.setString(6, "Customer");
+            ps.setString(7, phone);
+            ps.setString(8, address);
+
+            int rows = ps.executeUpdate();
+
+            if (rows > 0) {
+                rs = ps.getGeneratedKeys();
+
+                if (rs.next()) {
+                    int generatedId = rs.getInt(1);
+
+                    return new Customer(
+                            generatedId,
+                            userName,
+                            fName,
+                            lName,
+                            email,
+                            password,
+                            "Customer",
+                            phone,
+                            address
+                    );
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception ignored) {}
+            try { if (ps != null) ps.close(); } catch (Exception ignored) {}
+            try { if (conn != null) conn.close(); } catch (Exception ignored) {}
+        }
+
+        return null; // If creation fails
+    }
+
+
+    // ---------------- shipment request creation ----------------
+
+    public double createShipment(double weight, String type, int zone,
+                                 String recipient, String recipientAddress) {
+
+        Shipment s = new Shipment();
+        s.setShipmentId(shipmentHistory.size() + 1);
+        s.setUserId(this.userId);
+        s.setSenderName(fName + " " + lName);
+        s.setRecipientName(recipient);
+        s.setRecipientAddress(recipientAddress);
+        s.setWeight(weight);
+        s.setType(type);
+        s.setZone(zone);
+        s.setStatus("Pending");
+
+        // tracking and shimpment
+        String trk = Shipment.genTrackingNumber();
+        s.setTrackingNumber(trk);
+        s.setDistanceKm(Shipment.genDisByZone(zone));
+
+        // Cost calculation from shipment
+        double cost = s.calCost(weight, type, zone);
+        s.setCost(cost);
+
+        // Save shipment
+        shipmentHistory.add(s);
+
+        // Save invoice
+        invoices.add(
+                "Invoice for Shipment #" + s.getShipmentId() +
+                " | Tracking: " + s.getTrackingNumber() +
+                " | Cost: $" + cost +
+                " | Status: Unpaid"
+        );
+
+        return cost;
+    }
+
+
+    // ---------------- track package ----------------
+    public String trackPackage(String trackingNumber) {
+
+        for (Shipment s : shipmentHistory) {
+            if (s.getTrackingNumber().equals(trackingNumber)) {
+                return s.trackInfo();
+            }
+        }
+
+        return "Tracking number not found.";
+    }
+
+
+    // ---------------- view invoies stored in array ----------------
+
+    public String viewInvoices() {
+
+        if (invoices.isEmpty()) {
+            return "No invoices found.";
+        }
+
+        StringBuilder sb = new StringBuilder("Invoices:\n\n");
+
+        for (String inv : invoices) {
+            sb.append(inv).append("\n");
+        }
+
+        return sb.toString();
+    }
+
+
+    // ---------------- print shipment history----------------
+
+    public ArrayList<Shipment> getShipmentHistory() {
+        return shipmentHistory;
+    }
+
+
+	@Override
+	public void openMainPortal() {
+		
 	}
 
 }

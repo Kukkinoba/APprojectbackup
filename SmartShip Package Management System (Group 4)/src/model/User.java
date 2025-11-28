@@ -138,6 +138,14 @@ public abstract class User {
 		this.lastLogin = lastLogin;
 	}
 
+	
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", fName=" + fName + ", lName=" + lName
+				+ ", email=" + email + ", password=" + password + ", role=" + role + ", phone=" + phone + ", lastLogin="
+				+ lastLogin + "]";
+	}
+
+
 	//--------------------- Login Function ---------------------
 	public static User Login(String email, String password) {
 	    try {
@@ -204,10 +212,6 @@ public abstract class User {
 	};
 	
 	
-	// change password function
-	public void changePassword() {}
-	
-	
 	//---------------------Portals Section---------------------
-	abstract void openMainPortal();
+	public abstract void openMainPortal();
 }

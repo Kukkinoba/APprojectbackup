@@ -46,29 +46,27 @@ public class databaseConnection {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                int id = rs.getInt("user_id");
-                String fName = rs.getString("first_name");
-                String lName = rs.getString("last_name");
+                int id = rs.getInt("userId");
+                String userName = rs.getString("userName");
+                String fName = rs.getString("fName");
+                String lName = rs.getString("lName");
                 String role = rs.getString("role");
-
-                // Create username again by combining first and last name
-                String userName = fName + " " + lName;
+                String phone = rs.getString("phone");
 
                 logger.info("Found user in database: " + email + " | Role: " + role);
 
-                // Return object based on role
                 switch (role.toLowerCase()) {
                     case "manager":
-                        user = new Manager(id, userName, fName, lName, email, password, role);
+                        user = new Manager(id, userName, fName, lName, email, password, role, phone);
                         break;
                     case "driver":
-                        user = new Driver(id, userName, fName, lName, email, password, role);
+                        user = new Driver(id, userName, fName, lName, email, password, role, phone);
                         break;
                     case "customer":
-                        user = new Customer(id, userName, fName, lName, email, password, role);
+                        user = new Customer(id, userName, fName, lName, email, password, role, phone);
                         break;
                     case "clerk":
-                        user = new Clerk(id, userName, fName, lName, email, password, role);
+                        user = new Clerk(id, userName, fName, lName, email, password, role, phone);
                         break;
                     default:
                         logger.warn("Unknown role '{}' for user: {}", role, email);
@@ -80,10 +78,9 @@ public class databaseConnection {
 
         } catch (SQLException e) {
             LoggerManager.logException(logger, "SQL error while authenticating " + email, e);
-        } catch (Exception e) {
-            LoggerManager.logException(logger, "Unexpected error while authenticating " + email, e);
         }
 
         return user;
     }
+
 }

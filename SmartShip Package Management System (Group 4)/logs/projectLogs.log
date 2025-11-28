@@ -1,0 +1,9 @@
+[INFO ] 2025-11-27 14:45:22.890 [main] User - Attempting login for alice@smartship.com
+[INFO ] 2025-11-27 14:45:23.096 [main] databaseConnection - Connected to local SmartShip database successfully.
+[WARN ] 2025-11-27 14:45:25.593 [main] databaseConnection - No matching credentials found for: alice@smartship.com
+[WARN ] 2025-11-27 14:45:25.598 [main] User - Login failed for alice@smartship.com - credentials not found in database.
+[INFO ] 2025-11-27 15:26:05.463 [main] User - Attempting login for mark.lewis@smartship.com
+[INFO ] 2025-11-27 15:26:05.627 [main] databaseConnection - Connected to local SmartShip database successfully.
+[INFO ] 2025-11-27 15:26:08.171 [main] databaseConnection - Found user in database: mark.lewis@smartship.com | Role: driver
+[INFO ] 2025-11-27 15:26:08.175 [main] User - Login successful for user: mark.lewis@smartship.com | Role: driver
+[INFO ] 2025-11-27 15:26:08.177 [main] User - Redirecting Mark Lewis to Driver Portal...
