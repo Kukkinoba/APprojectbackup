@@ -6,7 +6,7 @@ import server.databaseConnection;
 
 public class Customer extends User {
 
-    private String address;
+    private String address; 
 
     // Storage
     private ArrayList<Shipment> shipmentHistory = new ArrayList<>();
